@@ -1,0 +1,34 @@
+#!/bin/ash
+
+#Use defaults if not set in environment
+MAXOPENCONNECTIONS=10
+MAXIDLECONNECTIONS=2
+CONNECTIONMAXIDLETIME=900
+QUERYTIMEOUT=30
+if [ -n "${DB_MAXOPENCONNECTIONS}" ]; then
+    MAXOPENCONNECTIONS=${DB_MAXOPENCONNECTIONS}
+fi
+if [ -n "${DB_MAXIDLECONNECTIONS}" ]; then
+    MAXIDLECONNECTIONS=${DB_MAXIDLECONNECTIONS}
+fi
+if [ -n "${DB_CONNECTIONMAXIDLETIME}" ]; then
+    CONNECTIONMAXIDLETIME=${DB_CONNECTIONMAXIDLETIME}
+fi
+if [ -n "${DB_QUERYTIMEOUT}" ]; then
+    QUERYTIMEOUT=${DB_QUERYTIMEOUT}
+fi
+
+
+cat <<EOM > config.yaml
+host: ${PGHOST}
+port: ${PGPORT}
+dbname: ${PGDATABASE}
+username: ${PGUSER}
+password: ${PGPASSWORD}
+dbMaxOpenConnections: ${MAXOPENCONNECTIONS}
+dbMaxIdleConnections: ${MAXIDLECONNECTIONS}
+dbConnectionMaxIdleTime: ${CONNECTIONMAXIDLETIME}
+dbQueryTimeout: ${QUERYTIMEOUT}
+EOM
+
+./bookstore
