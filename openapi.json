@@ -1,0 +1,253 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "v0",
+    "title": "Lava Internal Events",
+    "contact": {
+      "name": "Lava Support",
+      "url": "http://lava.ai",
+      "email": "support@lava.ai"
+    },
+    "license": {
+      "name": "Lava Inc."
+    }
+  },
+  "paths": {},
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AnalyticsEvent": {
+        "description": "payload for lava.mobile.analytics.{tenant}",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "app_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "tracker_type": {
+            "type": "string",
+            "description": "e.g. event"
+          },
+          "category": {
+            "type": "string",
+            "description": "e.g. HOME"
+          },
+          "action": {
+            "type": "string",
+            "description": "e.g. ViewScreen"
+          },
+          "path": {
+            "type": "string"
+          },
+          "meta_data": {
+            "type": "object"
+          },
+          "user_params": {
+            "type": "object"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "event_id",
+          "timestamp"
+        ]
+      },
+      "DeviceToken": {
+        "type": "object",
+        "properties": {
+          "notification_token": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "notification_token",
+          "platform"
+        ]
+      },
+      "DeviceInfoUpdate": {
+        "description": "payload for lava.device.registration.{tenant}",
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "app_id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "token": {
+            "$ref": "#/components/schemas/DeviceToken"
+          },
+          "prev_token": {
+            "$ref": "#/components/schemas/DeviceToken"
+          }
+        },
+        "required": [
+          "app_id",
+          "user_id"
+        ]
+      },
+      "MembershipCreate": {
+        "description": "payload for lava.membership.create.{tenant}",
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "grants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MembershipGrant"
+            }
+          },
+          "source": {
+            "description": "source of the request. e.g. a rule:{{ID}}",
+            "type": "string"
+          },
+          "reason": {
+            "description": "Free text for logging",
+            "type": "string"
+          },
+          "meLog": {
+            "description": "MELog formatted object: membership just needs to populate the closure -> JSON object field and publish on the me log topic",
+            "type": "object"
+          }
+        }
+      },
+      "MembershipGrant": {
+        "type": "object",
+        "properties": {
+          "reward_id": {
+            "type": "integer",
+            "x-go-type": "int32"
+          },
+          "is_balance": {
+            "description": "If true the amount is treated as a balance, otherwise Amount is added to balance",
+            "type": "boolean"
+          },
+          "amount": {
+            "description": "In cents or counts",
+            "type": "integer",
+            "x-go-type": "int32"
+          },
+          "duration": {
+            "description": "Supports standard duration times, examples: 48h, 1h, 30m.  Valid units are \"h\" or \"m\"",
+            "type": "string"
+          },
+          "expiration": {
+            "description": "Hard coded expiration date",
+            "type": "string",
+            "x-go-type": "strfmt.DateTime"
+          }
+        }
+      },
+      "MomentEventLog": {
+        "description": "payload for lava.me.log.{tenant}",
+        "type": "object",
+        "properties": {
+          "log_id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "tenant_id": {
+            "type": "string"
+          },
+          "op_type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "app_id": {
+            "type": "string"
+          },
+          "rule_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "segment_batch_id": {
+            "type": "string"
+          },
+          "action_batch_id": {
+            "type": "string"
+          },
+          "action_approved_id": {
+            "type": "string"
+          },
+          "segment_id": {
+            "type": "string"
+          },
+          "qg_name": {
+            "type": "string"
+          },
+          "ab_group": {
+            "type": "string"
+          },
+          "action_invoc_id": {
+            "type": "string"
+          },
+          "action_id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "sandboxed": {
+            "type": "boolean"
+          },
+          "closure": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "log_id",
+          "timestamp",
+          "instance",
+          "tenant_id",
+          "op_type",
+          "message"
+        ]
+      }
+    }
+  }
+}
