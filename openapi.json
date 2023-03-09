@@ -1,17 +1,5 @@
 {
   "openapi": "3.0.3",
-  "info": {
-    "version": "v0",
-    "title": "Lava Internal Events",
-    "contact": {
-      "name": "Lava Support",
-      "url": "http://lava.ai",
-      "email": "support@lava.ai"
-    },
-    "license": {
-      "name": "Lava Inc."
-    }
-  },
   "paths": {},
   "servers": [
     {
@@ -20,98 +8,8 @@
   ],
   "components": {
     "schemas": {
-      "AnalyticsEvent": {
-        "description": "payload for lava.mobile.analytics.{tenant}",
-        "type": "object",
-        "properties": {
-          "event_id": {
-            "type": "string"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "app_id": {
-            "type": "string"
-          },
-          "user_id": {
-            "type": "string"
-          },
-          "tracker_type": {
-            "type": "string",
-            "description": "e.g. event"
-          },
-          "category": {
-            "type": "string",
-            "description": "e.g. HOME"
-          },
-          "action": {
-            "type": "string",
-            "description": "e.g. ViewScreen"
-          },
-          "path": {
-            "type": "string"
-          },
-          "meta_data": {
-            "type": "object"
-          },
-          "user_params": {
-            "type": "object"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "event_id",
-          "timestamp"
-        ]
-      },
-      "DeviceToken": {
-        "type": "object",
-        "properties": {
-          "notification_token": {
-            "type": "string"
-          },
-          "platform": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "notification_token",
-          "platform"
-        ]
-      },
-      "DeviceInfoUpdate": {
-        "description": "payload for lava.device.registration.{tenant}",
-        "type": "object",
-        "properties": {
-          "event_id": {
-            "type": "string"
-          },
-          "app_id": {
-            "type": "integer"
-          },
-          "user_id": {
-            "type": "string"
-          },
-          "token": {
-            "$ref": "#/components/schemas/DeviceToken"
-          },
-          "prev_token": {
-            "$ref": "#/components/schemas/DeviceToken"
-          }
-        },
-        "required": [
-          "app_id",
-          "user_id"
-        ]
-      },
       "MembershipCreate": {
-        "description": "payload for lava.membership.create.{tenant}",
+        "description": "payload for membership.create.{tenant}",
         "type": "object",
         "properties": {
           "first_name": {
